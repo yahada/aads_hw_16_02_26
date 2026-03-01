@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstddef>
 
+//ВАРИАНТ LOOP + FAKE
 
 template< class T >
 struct BiList {
