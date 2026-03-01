@@ -162,7 +162,16 @@ int main()
   BiList<int>* d = add(c, 3);
 
   size_t s = 0;
-  int* res = convert<int>(a, s);
+  int* res = nullptr;
+  try
+  {
+    res = convert<int>(a, s);
+  } catch(...)
+  {
+    clear(a);
+    cut(a);
+    return 1;
+  }
 
   for (size_t i = 0; i < s; ++i)
   {
