@@ -6,8 +6,8 @@
 template< class T >
 struct BiList {
   T val;
-  BiList<T>* next;
-  BiList<T>* prev;
+  BiList< T >* next;
+  BiList< T >* prev;
 };
 
 /*
@@ -15,64 +15,64 @@ struct BiList {
 */
 
 template< class T >
-BiList<T>* create(const T& value);
+BiList< T >* create(const T& value);
 
 template< class T >
-BiList<T>* add(BiList<T>* h, const T& value);
+BiList< T >* add(BiList< T >* h, const T& value);
 
 template< class T >
-BiList<T>* insert(BiList<T>* h, const T& value);
+BiList< T >* insert(BiList< T >* h, const T& value);
 
 template< class T >
-BiList<T>* cut(BiList<T>* h) noexcept;
+BiList< T >* cut(BiList< T >* h) noexcept;
 
 template< class T >
-BiList<T>* erase(BiList<T>* h) noexcept;
+BiList< T >* erase(BiList< T >* h) noexcept;
 
 template< class T >
-BiList<T>* clear(BiList<T>* h) noexcept;
+BiList< T >* clear(BiList< T >* h) noexcept;
 
 template< class T >
-BiList<T>* fake(BiList<T>* h);
+BiList< T >* fake(BiList< T >* h);
 
 template< class T >
-BiList<T>* rmFake(BiList<T>* h) noexcept;
+BiList< T >* rmFake(BiList< T >* h) noexcept;
 
 template< class T, class F >
-F traverse(F f, BiList<T>* h, BiList<T>* e);
+F traverse(F f, BiList< T >* h, BiList< T >* e);
 
 /*
 ЗАДАЧА № 3
 */
 
 template< class T >
-BiList<T>* create(const T& value)
+BiList< T >* create(const T& value)
 {
-  BiList<T>* ret = new BiList<T>{value, nullptr, nullptr};
+  BiList< T >* ret = new BiList< T >{value, nullptr, nullptr};
   ret->next = ret;
-  ret->prev = ret; 
+  ret->prev = ret;
   return ret;
 }
 
 template< class T >
-BiList<T>* add(BiList<T>* h, const T& value)
+BiList< T >* add(BiList< T >* h, const T& value)
 {
-  BiList<T>* newNode = new BiList<T>{value, h, h->prev};
+  BiList< T >* newNode = new BiList< T >{value, h, h->prev};
   h->prev->next = newNode;
   h->prev = newNode;
   return newNode;
 }
 
 template< class T >
-BiList<T>* insert(BiList<T>* h, const T& value) 
+BiList< T >* insert(BiList< T >* h, const T& value) 
 {
   return add(h->next, value);
 }
 
 template< class T >
-BiList<T>* cut(BiList<T>* h) noexcept
+BiList< T >* cut(BiList< T >* h) noexcept
 {
-  BiList<T>* ret = h->next;
+  BiList< T >* ret = h->next;
   h->prev->next = ret;
   ret->prev = h->prev;
   delete h;
@@ -80,13 +80,13 @@ BiList<T>* cut(BiList<T>* h) noexcept
 }
 
 template< class T >
-BiList<T>* erase(BiList<T>* h) noexcept
+BiList< T >* erase(BiList< T >* h) noexcept
 {
   return cut(h->next);
 }
 
 template< class T >
-BiList<T>* clear(BiList<T>* h) noexcept
+BiList< T >* clear(BiList< T >* h) noexcept
 {
   while (h->next != h)
   {
@@ -96,19 +96,18 @@ BiList<T>* clear(BiList<T>* h) noexcept
 }
 
 template< class T >
-BiList<T>* fake(BiList<T>* h)
+BiList< T >* fake(BiList< T >* h)
 {
-  BiList<T>* r = static_cast< BiList<T>* >(::operator new (sizeof(BiList<T>*)));
+  BiList< T >* r = static_cast< BiList< T >* >(::operator new (sizeof(BiList< T >*)));
   r->prev = nullptr;
   r->next = h;
-  h->prev = r;
   return r;
 }
 
 template< class T >
-BiList<T>* rmFake(BiList<T>* h) noexcept
+BiList< T >* rmFake(BiList< T >* h) noexcept
 {
-  BiList<T>* ret = h->next;
+  BiList< T >* ret = h->next;
   ::operator delete(h);
   return ret;
 }
@@ -118,11 +117,11 @@ BiList<T>* rmFake(BiList<T>* h) noexcept
 */
 
 template< class T >
-T* convert(BiList<T>* h, size_t& s)
+T* convert(BiList< T >* h, size_t& s)
 {
 
   size_t counter = 1;
-  BiList<T>* f = fake(h);
+  BiList< T >* f = fake(h);
   while (h->next != f->next)
   {
     counter++;
@@ -157,16 +156,16 @@ T* convert(BiList<T>* h, size_t& s)
 
 int main()
 {
-  BiList<int>* a = create(1);
-  BiList<int>* b = insert(a, 2);
-  BiList<int>* c = insert(b, 4);
-  BiList<int>* d = add(c, 3);
+  BiList< int >* a = create(1);
+  BiList< int >* b = insert(a, 2);
+  BiList< int >* c = insert(b, 4);
+  BiList< int >* d = add(c, 3);
 
   size_t s = 0;
   int* res = nullptr;
   try
   {
-    res = convert<int>(a, s);
+    res = convert< int >(a, s);
   } catch(...)
   {
     clear(a);
